@@ -6,4 +6,12 @@ class Prato < ActiveRecord::Base
 
   has_and_belong_to_many :restaurantes
   has_one :receita
+
+  validate :validate_presence_of_more_than_one_restaurante
+
+  private
+  def validate_presence_of_more_than_one_restaurante
+    errors.add("restaurantes",
+        "deve haver ao menos um restaurantes") if restaurantes.empty?
+  end
 end
